@@ -19,16 +19,19 @@ namespace AuthenticationWithGoogle.Authentication
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         public User? CurrentUser { get; set; } = new();
         NavigationManager _navigationManager;
+        private readonly IConfiguration _config;
 
         public AuthenticationService(HttpClient httpClient,
                                     ILocalStorageService localStorageService,
-                                    AuthenticationStateProvider authenticationStateProvider, NavigationManager navigationManager)
+                                    AuthenticationStateProvider authenticationStateProvider, 
+                                    NavigationManager navigationManager, IConfiguration config)
         {
             _httpClient = httpClient;
-           // _httpClient.BaseAddress = new Uri("https://localhost:7029/");
+            // _httpClient.BaseAddress = new Uri("https://localhost:7029/");
             _localStorageService = localStorageService;
             _authenticationStateProvider = authenticationStateProvider;
             _navigationManager = navigationManager;
+            _config = config;
         }
         /// <summary>
         ///Call the API to login
@@ -41,7 +44,7 @@ namespace AuthenticationWithGoogle.Authentication
         /// <returns></returns>
         public async Task<AuthenticatedUser> Login(AuthenticationUser user)
         {
-            
+
             var data = new LoginRequestModel
             {
                 grant_type = "password",
@@ -53,7 +56,7 @@ namespace AuthenticationWithGoogle.Authentication
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/Auth/authenticate-custom")
             {
-                Content =  new StringContent(serializedUser)
+                Content = new StringContent(serializedUser)
             };
 
             requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -78,21 +81,21 @@ namespace AuthenticationWithGoogle.Authentication
         }
 
 
-       
 
-        [JSInvokable]     
+
+        [JSInvokable]
         public void GoogleLogin(GoogleResponse googleResponse)
         {
+
             var principal = new ClaimsPrincipal();
-           // var user = User.FromGoogleJwt(googleResponse.Credential);
-            //CurrentUser = user;
+            if (googleResponse is not null)
+            {
+                _localStorageService.SetItemAsync("authToken", googleResponse.Credential);
+                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(googleResponse.Credential);
 
-            //if (user is not null)
-            //{
-            //    principal = user.ToClaimsPrincipal();
-            //}
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", googleResponse.Credential);
+            }
 
-            ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(googleResponse.Credential);
             _navigationManager.NavigateTo("/");
 
 
@@ -102,15 +105,14 @@ namespace AuthenticationWithGoogle.Authentication
         public void MicrosoftLogin(MicrosoftResponse mResponse)
         {
             var principal = new ClaimsPrincipal();
-            // var user = User.FromGoogleJwt(googleResponse.Credential);
-            //CurrentUser = user;
+            if (mResponse is not null)
+            {
+                _localStorageService.SetItemAsync("authToken", mResponse.AccessToken);
+                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(mResponse.AccessToken);
 
-            //if (user is not null)
-            //{
-            //    principal = user.ToClaimsPrincipal();
-            //}
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", mResponse.AccessToken);
+            }
 
-            ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(mResponse.AccessToken);
             _navigationManager.NavigateTo("/");
 
 
