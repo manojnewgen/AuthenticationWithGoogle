@@ -11,7 +11,7 @@ function blazorGoogleInitialize(clientId, blazorAuthenticationService) {
     try {
         google.accounts.id.initialize({
             client_id: clientId,
-            callback: blazorCallback
+            callback: blazorGoogleCallback
         });
         console.info('Google Identity Services initialized successfully.');
     } catch (error) {
@@ -34,7 +34,7 @@ function blazorGooglePrompt() {
     }
 }
 
-function blazorCallback(googleResponse) {
+function blazorGoogleCallback(googleResponse) {
     if (!blazorAuthenticationServiceInstance) {
         console.error('blazorAuthenticationStateProviderInstance is not set.');
         return;
@@ -86,14 +86,14 @@ function MicrosoftPrompt() {
 
     MicrosoftAuthentication.loginPopup(loginRequest)
         .then(function (response) {
-            blazorCallback(response);
+            blazorCallbackMS(response);
         })
         .catch(function (error) {
             console.error("Failed to authenticate with Microsoft:", error);
         });
 }
 
-function blazorCallback(microsoftResponse) {
+function blazorCallbackMS(microsoftResponse) {
     if (blazorAuthenticationServiceInstance) {
         blazorAuthenticationServiceInstance.invokeMethodAsync("MicrosoftLogin", {
             IdToken: microsoftResponse.idToken,

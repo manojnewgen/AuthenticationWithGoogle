@@ -1,0 +1,42 @@
+﻿@page "/verify-auth"
+@using System.Security.Claims
+<h3>VerifyAuth</h3>
+@if (isAuthenticated)
+{
+    <h4>@userName</h4>
+    <p>Welcome, @userName</p>
+    <p>Is Admin: @isAdminUser</p>
+
+}
+else
+{
+    <p>Not Authenticated</p>
+}
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthState { get; set; }
+
+    private bool isAuthenticated = false;
+    private string userName;
+    private bool isAdminUser;
+    private bool isDeveloper;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthState;
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            isAuthenticated = true;
+            isAdminUser = authState.User.IsInRole("Admin");
+            isDeveloper = authState.User.IsInRole("Developer");
+            userName = authState.User.FindFirst(ClaimTypes.Name).Value??"";
+        }
+        else
+        {
+            userName = "Not Authenticated";
+        }
+
+    }
+}

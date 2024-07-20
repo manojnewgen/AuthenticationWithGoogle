@@ -1,6 +1,13 @@
 ﻿@page "/logout"
 @using AuthenticationWithGoogle.Utilities;
-@inject BlazorAuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
 
-<h3>Logout</h3>
-<button @onclick="AuthenticationStateProvider.Logout">Logout</button>
+@code{
+    protected override  async Task OnInitializedAsync()
+    {
+       await AuthService.Logout();
+       NavManager.NavigateTo("/");
+    }
+}
+
