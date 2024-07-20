@@ -1,0 +1,67 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = AuthenticationWithGoogle
+build_property.RootNamespace = AuthenticationWithGoogle
+build_property.ProjectDir = C:\DotnetProjects\authentication-with-google-blazor-wasm-dotnet7\AuthenticationWithGoogle\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\DotnetProjects\authentication-with-google-blazor-wasm-dotnet7\AuthenticationWithGoogle
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/AuthenticationResult.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25SZXN1bHQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/BasicLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/LoginWithGoogleCustomButton.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5XaXRoR29vZ2xlQ3VzdG9tQnV0dG9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/LoginWithGoogleRenderedButton.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5XaXRoR29vZ2xlUmVuZGVyZWRCdXR0b24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/LoginWithMIcroSoftButton.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5XaXRoTUljcm9Tb2Z0QnV0dG9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/DotnetProjects/authentication-with-google-blazor-wasm-dotnet7/AuthenticationWithGoogle/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

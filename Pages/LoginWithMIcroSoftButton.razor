@@ -1,0 +1,23 @@
+﻿@page "/sign-in-with-microsoft-button"
+@using AuthenticationWithGoogle.Utilities;
+@using Microsoft.AspNetCore.Components.Authorization;
+@inject IJSRuntime js;
+@inject IAuthenticationService authenticationService
+
+<div id="blazor-sign-in-button">
+    <button @onclick="SignInWithMicrosoft">Sign in with Microsoft</button>
+</div>
+<div><NavLink href="authentication-result">Go to Authentication Result</NavLink></div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var blazorAuthenticationService = DotNetObjectReference.Create<IAuthenticationService>(authenticationService);
+        await js.InvokeVoidAsync("microsoftInitialize", "1ad8a580-0d81-4814-9d98-4c109eac6426", blazorAuthenticationService);
+    }
+
+    private async Task SignInWithMicrosoft()
+    {
+        await js.InvokeVoidAsync("MicrosoftPrompt");
+    }
+}

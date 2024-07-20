@@ -1,0 +1,6 @@
+﻿@page "/logout"
+@using AuthenticationWithGoogle.Utilities;
+@inject BlazorAuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Logout</h3>
+<button @onclick="AuthenticationStateProvider.Logout">Logout</button>

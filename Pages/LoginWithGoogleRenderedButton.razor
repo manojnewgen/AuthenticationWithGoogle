@@ -1,0 +1,18 @@
+﻿@page "/sign-in-with-rendered-button"
+@using AuthenticationWithGoogle.Utilities;
+@using Microsoft.AspNetCore.Components.Authorization;
+@inject IJSRuntime JSRuntime
+@inject IAuthenticationService authenticationService
+
+<div id="blazor-school-button"></div>
+<div><NavLink href="authentication-result">Go to Authentication Result</NavLink></div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var blazorAuthenticationService = DotNetObjectReference.Create<IAuthenticationService>(authenticationService);
+        await JSRuntime.InvokeVoidAsync("blazorGoogleInitialize", "900369109846-3n0p622h5afqfmm8ahigr7p19oqa85od.apps.googleusercontent.com", blazorAuthenticationService);
+        var element = await JSRuntime.InvokeAsync<IJSObjectReference>("document.getElementById", "blazor-school-button");
+        await JSRuntime.InvokeVoidAsync("google.accounts.id.renderButton", element, new { theme = "filled_blue", size = "large" });
+    }
+}

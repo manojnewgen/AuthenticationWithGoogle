@@ -1,0 +1,24 @@
+﻿@page "/sign-in-with-custom-button"
+@using AuthenticationWithGoogle.Utilities;
+@using Microsoft.AspNetCore.Components.Authorization;
+@inject IJSRuntime JSRuntime
+@inject BlazorAuthenticationStateProvider BlazorAuthenticationStateProvider
+@inject NavigationManager navigationManager
+
+<button type="button" @onclick="SignInWithGoogleAsync">Sign In with Google</button>
+<div><NavLink href="authentication-result">Go to Authentication Result</NavLink></div>
+
+@code {
+
+    public async Task SignInWithGoogleAsync()
+    {
+        var blazorAuthenticationStateProvider = DotNetObjectReference.Create<BlazorAuthenticationStateProvider>(BlazorAuthenticationStateProvider);
+        await JSRuntime.InvokeVoidAsync("blazorGoogleInitialize", "900369109846-3n0p622h5afqfmm8ahigr7p19oqa85od.apps.googleusercontent.com", blazorAuthenticationStateProvider);
+        navigationManager.NavigateTo("/");
+        //The following code might not work in some cases
+        //await JSRuntime.InvokeVoidAsync("google.accounts.id.prompt");
+        
+        //The following code will execute the prompt function and print the reason of not working to the console if fails.
+        await JSRuntime.InvokeVoidAsync("blazorGooglePrompt");
+    }
+}

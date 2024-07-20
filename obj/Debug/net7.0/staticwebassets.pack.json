@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\bin\\Debug\\net7.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\obj\\Debug\\net7.0\\compressed\\ppi5djk38o.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\example-data\\blazorschool-admin.json",
+      "PackagePath": "staticwebassets\\example-data\\blazorschool-admin.json"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\example-data\\blazorschool-normal.json",
+      "PackagePath": "staticwebassets\\example-data\\blazorschool-normal.json"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\example-data\\blazorschool-paid.json",
+      "PackagePath": "staticwebassets\\example-data\\blazorschool-paid.json"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\js\\BlazorGoogleOAuth.js",
+      "PackagePath": "staticwebassets\\js\\BlazorGoogleOAuth.js"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\js\\BlazorGoogleOAuthWithAuthService.js",
+      "PackagePath": "staticwebassets\\js\\BlazorGoogleOAuthWithAuthService.js"
+    },
+    {
+      "Id": "C:\\DotnetProjects\\authentication-with-google-blazor-wasm-dotnet7\\AuthenticationWithGoogle\\wwwroot\\js\\BlazorMicrosoftOAuth.js",
+      "PackagePath": "staticwebassets\\js\\BlazorMicrosoftOAuth.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.AuthenticationWithGoogle.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.AuthenticationWithGoogle.props",
+      "PackagePath": "build\\AuthenticationWithGoogle.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.AuthenticationWithGoogle.props",
+      "PackagePath": "buildMultiTargeting\\AuthenticationWithGoogle.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.AuthenticationWithGoogle.props",
+      "PackagePath": "buildTransitive\\AuthenticationWithGoogle.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

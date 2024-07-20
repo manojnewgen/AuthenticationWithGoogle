@@ -1,0 +1,67 @@
+﻿@page "/login"
+<h3>Login</h3>
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+
+@if (showLoginError)
+{
+    <div class="alert alert-danger" role="alert">
+        @loginErrorMessage
+    </div>
+}
+
+<EditForm Model="authenticationModel" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group row">
+        <label for="Email" class="col-md-2 col-form-label">Email</label>
+        <div class="col-md-10">
+            <InputText id="Email" class="form-control" @bind-Value="authenticationModel.Email" />
+            <ValidationMessage For="@(() => authenticationModel.Email)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Password" class="col-md-2 col-form-label">Password</label>
+        <div class="col-md-10">
+            <InputText id="Password" class="form-control" @bind-Value="authenticationModel.Password" />
+            <ValidationMessage For="@(() => authenticationModel.Password)" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-success">Login</button>
+        </div>
+    </div>
+    
+
+</EditForm>
+
+@code {
+
+    private AuthenticationUser authenticationModel = new();
+    private bool showLoginError = false;
+    private string loginErrorMessage = string.Empty;
+
+    private async Task ExecuteLogin()
+    {
+        showLoginError = false;
+        loginErrorMessage = string.Empty;
+
+        var response = await AuthenticationService.Login(authenticationModel);
+
+        if (response is not null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            showLoginError = true;
+            loginErrorMessage = "User has not authenticated successfully.";
+        }
+    }
+
+
+
+}
