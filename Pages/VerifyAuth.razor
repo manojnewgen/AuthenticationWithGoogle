@@ -1,17 +1,28 @@
 ﻿@page "/verify-auth"
 @using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 <h3>VerifyAuth</h3>
 @if (isAuthenticated)
 {
     <h4>@userName</h4>
     <p>Welcome, @userName</p>
     <p>Is Admin: @isAdminUser</p>
+    <p>Is Developer: @isDeveloper</p>
+    <p>Is Guest: @isGuestUser</p>
 
 }
 else
 {
     <p>Not Authenticated</p>
 }
+<AuthorizeView Roles="guest">
+    <Authorized>
+        hello, I am in guest role
+    </Authorized>
+    <Authorizing><div>Loading...</div></Authorizing>
+    <NotAuthorized><div>Not authorized</div></NotAuthorized>
+</AuthorizeView>
+
 
 @code {
 
@@ -22,6 +33,7 @@ else
     private string userName;
     private bool isAdminUser;
     private bool isDeveloper;
+    private bool isGuestUser;
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,8 +41,9 @@ else
         if (authState.User.Identity.IsAuthenticated)
         {
             isAuthenticated = true;
-            isAdminUser = authState.User.IsInRole("Admin");
-            isDeveloper = authState.User.IsInRole("Developer");
+            isAdminUser = authState.User.IsInRole("admin");
+            isDeveloper = authState.User.IsInRole("developer");
+            isGuestUser = authState.User.IsInRole("guest");
             userName = authState.User.FindFirst(ClaimTypes.Name).Value??"";
         }
         else

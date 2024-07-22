@@ -1,23 +1,55 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.Authorization
 
+<PageTitle>Authenticat</PageTitle>
 
-<PageTitle>Blazor School code sample</PageTitle>
+<div class="container">
+    <h1 class="title">Authentication test project</h1>
+    <p class="description">Demonstrate how to authenticate users with Google OAuth 2.0 in Blazor WebAssembly </p>
+   
+    <AuthorizeView>
+        <Authorized>
+            <div class="nav-link"><NavLink href="logout">Logout</NavLink></div>
 
-<h1>Welcome to Blazor School!</h1>
-<p>Demonstrate how to authenticate user with Google OAuth 2.0 in Blazor WebAssembly .NET 7. - Blazor School</p>
-<p>For additional tutorials on Blazor WebAssembly, visit <a href="https://blazorschool.com" target="_blank">Blazor School</a>.</p>
-<AthorizedView>
-    <Authorized>
-        <div><NavLink href="logout">Logout</NavLink></div>
-    </Authorized>
-    <NotAuthorized>
-     <div><NavLink href="basic-login">Basic Login</NavLink></div>
-    <div><NavLink href="sign-in-with-custom-button">Login with Google (custom button)</NavLink></div>
-    <div><NavLink href="sign-in-with-rendered-button">Login with Google (rendered button)</NavLink></div>
-     <div><NavLink href="sign-in-with-microsoft-button">Login with Microsoft</NavLink></div>
-     <div><NavLink href="custom-login">Custom Login</NavLink></div>
-    <div><NavLink href="authentication-result">Authentication Result</NavLink></div>
-    </NotAuthorized
-</AthorizedView>
+        </Authorized>
+        <Authorizing>
+            <p>Authenticating...</p>
+        </Authorizing>
+        <NotAuthorized>
+            <div class="nav-link"><NavLink href="basic-login">Basic Login</NavLink></div>
+            <div class="nav-link"><NavLink href="sign-in-with-custom-button">Login with Google (custom button)</NavLink></div>
+            <div class="nav-link"><NavLink href="sign-in-with-rendered-button">Login with Google (rendered button)</NavLink></div>
+            <div class="nav-link"><NavLink href="sign-in-with-microsoft-button">Login with Microsoft</NavLink></div>
+            <div class="nav-link"><NavLink href="custom-login">Custom Login</NavLink></div>
+            <div class="nav-link"><NavLink href="authentication-result">Authentication Result</NavLink></div>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
 
-
+<style>
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .description {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .nav-link {
+        margin-bottom: 10px;
+    }
+    
+    .tutorial-link {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+</style>

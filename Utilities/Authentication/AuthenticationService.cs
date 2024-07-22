@@ -1,13 +1,17 @@
 ﻿using AuthenticationWithGoogle.Models;
+using AuthenticationWithGoogle.Utilities.Authentication;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AuthenticationWithGoogle.Authentication
@@ -72,6 +76,10 @@ namespace AuthenticationWithGoogle.Authentication
             var authUser = JsonSerializer.Deserialize<AuthenticatedUser>(authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+            if (!JwtValidator.ValidateJwtToken(authUser.Access_Token, "e959f9c5-f002-4c06-9fef-f650ca69c98c", "authApi", "blazorWasm")){
+                return null;
+            }
+
             await _localStorageService.SetItemAsync("authToken", authUser.Access_Token);
             ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(authUser.Access_Token);
 
@@ -84,16 +92,35 @@ namespace AuthenticationWithGoogle.Authentication
 
 
         [JSInvokable]
-        public void GoogleLogin(GoogleResponse googleResponse)
+        public async void GoogleLogin(GoogleResponse googleResponse)
         {
 
             var principal = new ClaimsPrincipal();
             if (googleResponse is not null)
             {
-                _localStorageService.SetItemAsync("authToken", googleResponse.Credential);
-                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(googleResponse.Credential);
+                var googleToken = googleResponse.Credential;
+                var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/auth/validate-google-token")
+                {
+                    Content = new StringContent(JsonSerializer.Serialize(googleToken), Encoding.UTF8, "application/json")
+                };
 
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", googleResponse.Credential);
+                var response =  await _httpClient.SendAsync(requestMessage);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Handle the error
+                    return;
+                }
+
+                var authContent = await response.Content.ReadAsStringAsync();
+                var authUser = JsonSerializer.Deserialize<AuthenticatedUser>(authContent,
+               new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                _localStorageService.SetItemAsync("authToken", authUser.Access_Token);
+             
+                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(authUser.Access_Token);
+
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authUser.Access_Token);
             }
 
             _navigationManager.NavigateTo("/");
