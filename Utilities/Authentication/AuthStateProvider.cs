@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace AuthenticationWithGoogle.Authentication
 {
-    public class AuthStateProvider : AuthenticationStateProvider
+    public class AuthStateProvider : AuthenticationStateProvider, IDisposable
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorageService;
@@ -18,13 +18,7 @@ namespace AuthenticationWithGoogle.Authentication
             _authState = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
-        //public async void Dispose()
-        //{
-        //    _httpClient.Dispose();
-        //    await _localStorageService.RemoveItemAsync("authToken");
-
-        //}
-
+       
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await _localStorageService.GetItemAsync<string>("authToken");
@@ -44,10 +38,23 @@ namespace AuthenticationWithGoogle.Authentication
             NotifyAuthenticationStateChanged(authState);
         }
 
+        public void NotifyUserAuthentication(ClaimsPrincipal claimsPrincipal)
+        {
+            var authenticatedUser = claimsPrincipal;
+            var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+            NotifyAuthenticationStateChanged(authState);
+        }
         public void NotifyUserLogout()
         {
             var authState = Task.FromResult(_authState);
             NotifyAuthenticationStateChanged(authState);
         }
+        public async void Dispose()
+        {
+            _httpClient.Dispose();
+            await _localStorageService.RemoveItemAsync("authToken");
+            
+        }
+
     }
 }

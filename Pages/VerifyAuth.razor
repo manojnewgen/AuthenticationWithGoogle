@@ -44,7 +44,7 @@ else
             isAdminUser = authState.User.IsInRole("admin");
             isDeveloper = authState.User.IsInRole("developer");
             isGuestUser = authState.User.IsInRole("guest");
-            userName = authState.User.FindFirst(ClaimTypes.Name).Value??"";
+            userName = authState.User.FindFirst("given_name")?.Value;
         }
         else
         {

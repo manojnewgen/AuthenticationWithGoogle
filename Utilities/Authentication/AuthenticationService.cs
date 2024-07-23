@@ -27,7 +27,7 @@ namespace AuthenticationWithGoogle.Authentication
 
         public AuthenticationService(HttpClient httpClient,
                                     ILocalStorageService localStorageService,
-                                    AuthenticationStateProvider authenticationStateProvider, 
+                                    AuthenticationStateProvider authenticationStateProvider,
                                     NavigationManager navigationManager, IConfiguration config)
         {
             _httpClient = httpClient;
@@ -76,7 +76,8 @@ namespace AuthenticationWithGoogle.Authentication
             var authUser = JsonSerializer.Deserialize<AuthenticatedUser>(authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (!JwtValidator.ValidateJwtToken(authUser.Access_Token, "e959f9c5-f002-4c06-9fef-f650ca69c98c", "authApi", "blazorWasm")){
+            if (!JwtValidator.ValidateJwtToken(authUser.Access_Token, "e959f9c5-f002-4c06-9fef-f650ca69c98c", "authApi", "blazorWasm"))
+            {
                 return null;
             }
 
@@ -104,7 +105,7 @@ namespace AuthenticationWithGoogle.Authentication
                     Content = new StringContent(JsonSerializer.Serialize(googleToken), Encoding.UTF8, "application/json")
                 };
 
-                var response =  await _httpClient.SendAsync(requestMessage);
+                var response = await _httpClient.SendAsync(requestMessage);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -117,7 +118,7 @@ namespace AuthenticationWithGoogle.Authentication
                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 _localStorageService.SetItemAsync("authToken", authUser.Access_Token);
-             
+
                 ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(authUser.Access_Token);
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authUser.Access_Token);
@@ -129,21 +130,42 @@ namespace AuthenticationWithGoogle.Authentication
         }
 
         [JSInvokable]
-        public void MicrosoftLogin(MicrosoftResponse mResponse)
+        public async void MicrosoftLogin(MicrosoftResponse mResponse)
         {
             var principal = new ClaimsPrincipal();
             if (mResponse is not null)
             {
-                _localStorageService.SetItemAsync("authToken", mResponse.AccessToken);
-                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(mResponse.AccessToken);
+                // Use the Access_token for making API calls
+                var authToken = mResponse.IdToken;
 
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", mResponse.AccessToken);
+                var requestMessage = new HttpRequestMessage(HttpMethod.Post, "api/auth/add-role-to-token")
+                {
+                    Content = new StringContent(JsonSerializer.Serialize(authToken), Encoding.UTF8, "application/json")
+                };
+
+                var response = await _httpClient.SendAsync(requestMessage);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Handle the error
+                    return;
+                }
+
+                var authContent = await response.Content.ReadAsStringAsync();
+                var authUser = JsonSerializer.Deserialize<AuthenticatedUser>(authContent,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                // Store the Access_token for future API calls
+                await _localStorageService.SetItemAsync("authToken", authUser.Access_Token);
+
+                ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(authUser.Access_Token);
+
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authUser.Access_Token);
             }
 
             _navigationManager.NavigateTo("/");
-
-
         }
+
         public async Task Logout()
         {
             await _localStorageService.RemoveItemAsync("authToken");
